@@ -1,4 +1,6 @@
 Gearshare::Application.routes.draw do
+  resources :friendships
+
   resources :items
 
   resources :users

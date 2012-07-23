@@ -1,8 +1,8 @@
 class CreateSharedItems < ActiveRecord::Migration
   def change
     create_table :shared_items do |t|
-      t.reference :item_id
-      t.reference :user_id
+      t.integer :item_id
+      t.integer :user_id
 
       t.timestamps
     end
