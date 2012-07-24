@@ -40,3 +40,5 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 gem 'therubyracer', :platform => :ruby
 gem 'chosen-rails'
+
+gem "heroku", "~> 2.29.0"

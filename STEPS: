@@ -1,0 +1,75 @@
+STEPS:
+go back over associations with avi
+
+define a current user-- this has been added to the app controller
+ - don't need login system yet, but should I do this together?
+
+adding friends
+ - need to create current user.
+
+create share items button
+
+create a profile page:
+- from the rails cast on adding friends... this goes on the users show page-- maybe it should go on my profile page...
+
+ <h2>Friends</h2>
+<ul>
+  <% for friendship in @user.friendships %>
+    <li>
+      <%=h friendship.friend.username %>
+      (<%= link_to "remove", friendship, :method => :delete %>)
+    </li>
+  <% end %>
+</ul>
+
+<p><%= link_to "Find Friends", users_path %></p>
+
+<h2>Friended by Users</h2>
+<ul>
+  <% for user in @user.inverse_friends %>
+    <li><%=h user.username %></li>
+  <% end %>
+</ul>
+
+
+
+
+models:
+
+user model- your info and access info of others (like geographic info)
+ user
+  has many :owned_equipment, :class => :equipment, :forgein_key => :owner_id
+
+  login system with authentication
+  omniauth for facebook or google access?
+
+  sharing your gear should be a seperate form... it's a different process
+
+gear - list out the items you want to rent
+ belongs_to :owner, :class => :user,
+
+  break down gear into categories:
+   biking
+   camping
+   rock climbing
+
+shared_equipment
+  has many equipment ids
+  has many user ids 
+
+
+  that setups Equipment belongs to User as Owner
+  so equipment.owner will return the user whose equipment it is
+
+
+
+additional functionality gems:
+search -- look in the components section of the twitter bootstrap site for search fields
+located other friends my geolocation
+access a list of friends via facebook or OpenID to ask them to join the network
+
+
+
+
+
+
