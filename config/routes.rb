@@ -5,6 +5,14 @@ Gearshare::Application.routes.draw do
 
   resources :users
 
+  resources :sessions, only: [:new, :create, :destroy]
+
+  match '/signup', to: 'users#new', :as => :sign_up
+
+  match '/login', to: 'sessions#new', :as => :log_in
+
+  match '/logout', to: 'sessions#destroy', :as => :log_out
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

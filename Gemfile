@@ -44,3 +44,5 @@ gem 'chosen-rails'
 gem "heroku", "~> 2.29.0"
 
 gem "airbrake"
+
+gem "omniauth-facebook"
