@@ -13,6 +13,8 @@ Gearshare::Application.routes.draw do
 
   match '/logout', to: 'sessions#destroy', :as => :log_out
 
+  match '/auth/facebook/callback', to: 'sessions#create'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

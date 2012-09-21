@@ -20,6 +20,7 @@
 		  <li><a href="#">List your gear</a></li>
 		  <li><a href="#">Borrow gear</a></li>
 		  <li><a href="/signup">Sign Up</a></li>
+		  <li><%= link_to "sign in with facebook", "/auth/facebook" %>
 		</ul>
 		  
 		  <script>
@@ -58,7 +59,22 @@
 
 </head>
 <body>
-
+<% if current_user %>
+		<div class="sidebar-nav">
+		  <div class="well" style="width:200px; padding: 8px 0;">
+		    <ul class="nav nav-list"> 
+		      <li class="nav-header">Dashboard</li> 
+		      <li><%= link_to current_user do %>
+  					<i class="icon-home"></i> Profile
+					<% end %></li>
+		      <li><a href="/items"><i class="icon-edit"></i> Add Items</a></li>
+		          <li><a href="#"><i class="icon-calendar"></i> Calendar</a></li>
+		      <li><a href="#"><i class="icon-user"></i> Add Friends</a></li>
+		      <li><a href="#"><i class="icon-comment"></i> Send a message</a></li>
+		    </ul>
+		  </div>
+		</div>
+								  <% end %>
 <%= yield %>
 
 </body>

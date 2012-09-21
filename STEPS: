@@ -1,16 +1,31 @@
+create a profile page
+import pic from FB and display
+location
+name
+
+
+need to import location data for the user and friends from FB
+  display # of friends within X miles
+  allow user to invite these friends
+
+gearsharing among friends
+  able to create items
+
+  if you are friends- you can see their gear and they can see yours
+  calendar function for them to book gear
+
+
+
+
 STEPS:
 go back over associations with avi
 
-define a current user-- this has been added to the app controller
- - don't need login system yet, but should I do this together?
 
 adding friends
  - need to create current user.
 
 create share items button
 
-create a profile page:
-- from the rails cast on adding friends... this goes on the users show page-- maybe it should go on my profile page...
 
  <h2>Friends</h2>
 <ul>
@@ -67,9 +82,3 @@ additional functionality gems:
 search -- look in the components section of the twitter bootstrap site for search fields
 located other friends my geolocation
 access a list of friends via facebook or OpenID to ask them to join the network
-
-
-
-
-
-
