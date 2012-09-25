@@ -1,7 +1,11 @@
 create a profile page
-import pic from FB and display
-location
-name
+
+ask FB for permission to access the user's:
+-location
+-profile pic and display
+-name
+
+@graph = Koala::Facebook::API.new('AAACEdEose0cBAPCLDO1OLZAmcyt6tkSeb9wfqXAP8tAFBpRG9jZCyMG9LV0CyLCEJvJZAe5pgkr4pcGjJI6vbyTCbkt2pt3ZAkfaHI82BwZDZD')
 
 
 need to import location data for the user and friends from FB
@@ -13,8 +17,6 @@ gearsharing among friends
 
   if you are friends- you can see their gear and they can see yours
   calendar function for them to book gear
-
-
 
 
 STEPS:
@@ -47,16 +49,12 @@ create share items button
 </ul>
 
 
-
-
 models:
 
 user model- your info and access info of others (like geographic info)
  user
   has many :owned_equipment, :class => :equipment, :forgein_key => :owner_id
 
-  login system with authentication
-  omniauth for facebook or google access?
 
   sharing your gear should be a seperate form... it's a different process
 
