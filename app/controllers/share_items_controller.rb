@@ -24,7 +24,7 @@ class ShareItemsController < ApplicationController
       end
     end
   end
-	end
+	
 
 
 end
