@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   #has_secure_password
 
-  validates_uniqueness_of :email
+  #validates_uniqueness_of :email
  # validates_presence_of :first_name, :last_name, :email, :on => :create
 
   has_one :location
@@ -44,38 +44,45 @@ class User < ActiveRecord::Base
    "#{first_name}" "#{last_name}"
   end
   
+  def self.create_with_omniauth(auth)
+  create! do |user|
+    user.provider = auth["provider"]
+    user.uid = auth["uid"]
+    user.first_name = auth["info"]["first_name"]
+  end
+end
 
-  def self.from_omniauth(auth)
-    user = where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
-      user.provider = auth["provider"]
-      user.uid = auth["uid"]
-      user.name = auth["info"]["name"]
-      user.first_name = auth["info"]["first_name"]
-      user.last_name = auth["info"]["last_name"]
-      user.image = auth["info"]["image"]
-      user.email = auth["info"]["email"]
-      user.gender = auth["extra"]["raw_info"]["gender"]
-      user.location = auth["extra"]["raw_info"]["location"]["name"]          
-      user.token = auth["credentials"]["token"]
-      end
-    user.add_friends
-    user.save
-    user
-    end
+  # def self.from_omniauth(auth)
+  #   user = where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+  #     user.provider = auth["provider"]
+  #     user.uid = auth["uid"]
+  #     user.name = auth["info"]["name"]
+  #     user.first_name = auth["info"]["first_name"]
+  #     user.last_name = auth["info"]["last_name"]
+  #     user.image = auth["info"]["image"]
+  #     user.email = auth["info"]["email"]
+  #     user.gender = auth["extra"]["raw_info"]["gender"]
+  #     user.location = auth["extra"]["raw_info"]["location"]["name"]          
+  #     user.token = auth["credentials"]["token"]
+  #     end
+  #   user.add_friends
+  #   user.save
+  #   user
+  #   end
 
 
 #Koala####
 
-def connection(token)
+def facebook_connection
   @facebook.get_connections("me", "friends", :fields => "name, id, location")
 end
 
 #get loop through all friends and push their attributes into the hash
-  def friends
-    connection(token).each do |hash|
-      self.friends.where(:name => hash['name'], :uid => hash['id'], :friend_location => hash['location']).first_or_create
-    end
-  end
+  # def facebook_friends
+  #   facebook_connection(token).each do |hash|
+  #     self.friends.where(:name => hash['name'], :uid => hash['id'], :friend_location => hash['location']).first_or_create
+  #   end
+  # end
 
 #something like this to check if a friend of your is registered...
   # def registered_friend
