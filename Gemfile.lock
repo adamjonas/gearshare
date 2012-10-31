@@ -60,6 +60,7 @@ GEM
       multi_json (~> 1.0)
     faraday (0.8.4)
       multipart-post (~> 1.1)
+    geocoder (1.1.4)
     hashie (1.2.0)
     heroku (2.29.0)
       heroku-api (~> 0.2.13)
@@ -177,6 +178,7 @@ DEPENDENCIES
   chosen-rails
   coffee-rails (~> 3.2.1)
   debugger
+  geocoder
   heroku (~> 2.29.0)
   jquery-rails
   koala

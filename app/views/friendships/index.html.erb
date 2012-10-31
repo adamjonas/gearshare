@@ -7,6 +7,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @friendships.each do |friendship| %>
@@ -16,6 +17,7 @@
     <td><%= link_to 'Show', friendship %></td>
     <td><%= link_to 'Edit', edit_friendship_path(friendship) %></td>
     <td><%= link_to 'Destroy', friendship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'New Friendship', new_friendship_path %></td>
   </tr>
 <% end %>
 </table>
