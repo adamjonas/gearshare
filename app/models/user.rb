@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid, :location
+  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid
 
   has_many :shared_items, :class_name => "Item", :foreign_key => "owner_id"
 
@@ -9,13 +9,12 @@ class User < ActiveRecord::Base
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
-  #has_secure_password
+  attr_accessor :name, :image, :gender, :location, :token
+ # has_secure_password
 
   #validates_uniqueness_of :email
  # validates_presence_of :first_name, :last_name, :email, :on => :create
 
-  has_one :location
-  accepts_nested_attributes_for :location
 
   def self.authenticate(email, password)
     user = find_by_email(email)
@@ -26,18 +25,22 @@ class User < ActiveRecord::Base
     end
   end
 
+  # def self.from_omniauth(auth)
+  #   where(auth.slice("provider", "uid")).first || create_from_omniauth(auth)
+  # end
 
   def self.create_from_omniauth(auth)
     create! do |user|
       user.provider = auth[:provider]
       user.uid = auth[:uid]
+     # user.name = auth[:info][:name]
       user.first_name = auth[:info][:first_name]
     end
   end
 
 
   def request_to_borrow_item
-  	self.shared_items.build(:item_id => params[:id], :status => :open)
+    self.shared_items.build(:item_id => params[:id], :status => :open)
   end
 
   def name
@@ -70,8 +73,14 @@ end
   #   user
   #   end
 
+#get loop through all friends and push their attributes into the hash
+  def add_friends
+    # @facebook.get_connection("me", "friends").each do |hash|
+    #   self.friends.where(:name => hash['name'], :uid => hash['id']).first_or_create
+    # end
+  end
 
-#Koala####
+  #Koala####
 
 def facebook_connection
   @facebook.get_connections("me", "friends", :fields => "name, id, location")
@@ -84,13 +93,7 @@ end
   #   end
   # end
 
-#something like this to check if a friend of your is registered...
-  # def registered_friend
-  #   uids = @friends.collect(&:uid)
-  #   # uids is an array of Facebook UID's, say [1234, 5678, 9012]
-  #   registered_friends = User.where('fb_uid IN (?)', uids)
-  #   # "SELECT users.* FROM users WHERE (fb_uid IN (1234, 5678, 9012))"
-  # end
+#this is the query string I'm looking for... /4205423?fields=id,name,friends.fields(location)
 
 
   private
@@ -100,6 +103,13 @@ end
   end
 
 
+#something like this to check if a friend of your is registered...
+  # def registered_friend
+  #   uids = @friends.collect(&:uid)
+  #   # uids is an array of Facebook UID's, say [1234, 5678, 9012]
+  #   registered_friends = User.where('fb_uid IN (?)', uids)
+  #   # "SELECT users.* FROM users WHERE (fb_uid IN (1234, 5678, 9012))"
+  # end
 
  
 end
