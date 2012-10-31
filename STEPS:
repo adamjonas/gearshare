@@ -57,8 +57,6 @@ friends_location.first
 ===================
 
 
-
-
 ==============registered you have friends who are registered?==========
 uids = @friends.collect(&:uid)
 # uids is an array of Facebook UID's, say [1234, 5678, 9012]

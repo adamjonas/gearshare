@@ -15,7 +15,6 @@
     </section>
   </aside>
 </div>
-
   <dl class="dl-horizontal">
     <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
     <dd><%= @user.email %></dd>
@@ -23,6 +22,16 @@
     <dd><%= @user.first_name %></dd>
     <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
     <dd><%= @user.last_name %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:street1) %>:</strong></dt>
+    <dd><%= @location.street1 %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:street2) %>:</strong></dt>
+    <dd><%= @location.street2 %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:city) %>:</strong></dt>
+    <dd><%= @location.city %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:state) %>:</strong></dt>
+    <dd><%= @location.state %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:zip) %>:</strong></dt>
+    <dd><%= @location.zip %></dd>
   </dl>
 
   <div class="form-actions"> 
@@ -37,11 +46,11 @@
                 :class => 'btn btn-danger' %>
   </div>
 <% if @user.location %>
-  <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
+  <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@user.location.latitude}%2C#{@user.location.longitude}" %>
 
 <h3>Nearby locations</h3>
 <ul>
-<% for location in @location.nearbys(10) %>
+<% for location in @user.location.nearbys(10) %>
   <li><%= link_to location.address, location %> (<%= location.distance.to_f.round(2).to_s %> miles)</li>
 <% end %>
 </ul>

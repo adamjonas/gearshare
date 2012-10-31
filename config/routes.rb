@@ -5,7 +5,9 @@ Gearshare::Application.routes.draw do
 
   resources :items
 
-  resources :users
+  resources :users do
+    resource :location
+  end
 
   resources :sessions, only: [:new, :create, :destroy]
 

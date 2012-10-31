@@ -33,7 +33,7 @@ end
 
   # GET /locations/1/edit
   def edit
-    @location = Location.find(params[:id])
+    @location = current_user.location
   end
 
   # POST /locations
