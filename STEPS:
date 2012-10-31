@@ -5,7 +5,98 @@ ask FB for permission to access the user's:
 -profile pic and display
 -name
 
-@graph = Koala::Facebook::API.new('AAACEdEose0cBAPCLDO1OLZAmcyt6tkSeb9wfqXAP8tAFBpRG9jZCyMG9LV0CyLCEJvJZAe5pgkr4pcGjJI6vbyTCbkt2pt3ZAkfaHI82BwZDZD')
+@graph = Koala::Facebook::API.new('AAACEdEose0cBAFXgaRNoHyxF8nNZBj3AfQUUwIAWvbZCv88KVpn8H4ZCKLjvwNuGqhecLwqewMbJPEZAEB1az10qJewcrxgKmTVIFg4ekgZDZD')
+
+friends = @graph.get_connections("me", "friends")
+
+friends_location = @graph.get_connections("me", "friends", :fields => "name, id, location")
+
+==============
+ friends.map { |f| f["name"] }
+=> ["Alan Ginsberg", "Benjamin W. Hall", "Ashish Shetty", "Matt Ferrisi", "Adam Bernstein", "David Auld", "Drew Chin", "Elizabeth Tung", "Jeremiah Daly", "Nick Blum", "Mike Turner", "Darren Gastrock", "Crosby Haynes", "Danielle Luber Van Arsdale", "Tim Daniels", "Dapo Babatunde", "Abigail Bowen", "Arup Sen", "Ian Cropp", "Mia Locks", "Moses Kagan", "Dan Shvartsman", "Wallis Larson", "Justin Pytka",
+================
+https://graph.facebook.com/me/friends?access_token=AAACEdEose0cBAExd7g6LGAQ6O3H5OAIflIRoQgZCba22zI7WdkCJx1ZBt5moZC5mjPEpJAbpGSrJW5snxJuB6ZA0vMx1qXZBwiINBDTuUUwZDZD&fields=id,name,%20location
+https://graph.facebook.com/me/friends?access_token="get this from fb tool"&fields=id,name,%20location
+#=> friends' name, id, location ID and name of the town. (this has a limit of 5000)
+{
+   "data": [
+      {
+         "id": "2565",
+         "name": "Alan Ginsberg",
+         "location": {
+            "id": "108056275889020",
+            "name": "Cambridge, Massachusetts"
+         }
+      },
+      {
+         "id": "4896",
+         "name": "Benjamin W. Hall",
+         "location": {
+            "id": "108056275889020",
+            "name": "Cambridge, Massachusetts"
+         }
+      },
+      {
+         "id": "101677",
+         "name": "Ashish Shetty",
+         "location": {
+            "id": "108424279189115",
+            "name": "New York, New York"
+         }
+      },
+
+====LOCATION!! THIS IS IT====
+friends_location = @graph.get_connections("me", "friends", :fields => "name, id, location")
+
+friends_location.first
+=> {"name"=>"Alan Ginsberg", "id"=>"2565", "location"=>{"id"=>"108056275889020", "name"=>"Cambridge, Massachusetts"}}
+066:0 > alan = _
+=> {"name"=>"Alan Ginsberg", "id"=>"2565", "location"=>{"id"=>"108056275889020", "name"=>"Cambridge, Massachusetts"}}
+067:0 > alan["location"]["name"]
+=> "Cambridge, Massachusetts"
+===================
+
+
+
+
+==============registered you have friends who are registered?==========
+uids = @friends.collect(&:uid)
+# uids is an array of Facebook UID's, say [1234, 5678, 9012]
+registered_friends = User.where('fb_uid IN (?)', uids)
+# "SELECT users.* FROM users WHERE (fb_uid IN (1234, 5678, 9012))"
+
+registered_friends = Authorizations.where(:type => 'Facebook') \
+  .where('fb_uid IN (?)', uids).includes(:user).collect(&:user)
+=========================================
+
+def add_friends
+    facebook.get_connections("me", "friends", :fields => "name, id, location").each do |hash|
+      self.friends.where(:name => hash['name'], :uid => hash['id'], :highschool_name => hash['education'][0]['school']['name'], :graduateschool_name => hash['education'][1]['school']['name']).first_or_create
+    end
+  end
+
+
+======BUILDING MAPS==============
+Location data based on ids resides here...
+http://developers.facebook.com/docs/reference/fql/place/
+
+create a google map with latitude and long:
+https://maps.google.com/?q=-37.866963,144.980615
+
+markers can be added using this documentation
+https://developers.google.com/maps/documentation/staticmaps/#Markers
+===========================
+
+Geocoder
+https://github.com/alexreisner/geocoder
+
+needed? https://github.com/apneadiving/Google-Maps-for-Rails
+
+========
+
+
+4205423?fields=id,name,location,friends.fields(location)
+
 
 
 need to import location data for the user and friends from FB
@@ -21,7 +112,6 @@ gearsharing among friends
 
 STEPS:
 go back over associations with avi
-
 
 adding friends
  - need to create current user.
@@ -80,3 +170,4 @@ additional functionality gems:
 search -- look in the components section of the twitter bootstrap site for search fields
 located other friends my geolocation
 access a list of friends via facebook or OpenID to ask them to join the network
+

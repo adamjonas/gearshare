@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904185237) do
+ActiveRecord::Schema.define(:version => 20121031174621) do
 
   create_table "friendships", :force => true do |t|
     t.integer  "user_id"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(:version => 20120904185237) do
     t.string   "category"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "shared_items", :force => true do |t|
@@ -42,7 +51,6 @@ ActiveRecord::Schema.define(:version => 20120904185237) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "provider"
-    t.string   "uid"
   end
 
 end
