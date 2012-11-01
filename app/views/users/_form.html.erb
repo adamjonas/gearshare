@@ -17,12 +17,18 @@
       <%= f.text_field :last_name, :class => 'text_field' %>
     </div>
   </div>
-<!--   <div class="control-group">
-    <%#= f.label :street1, :class => 'control-label' %>
+
+<% if @location.street1 %>
+  <!-- fields_for  -->
+
+  <div class="control-group">
+    <%= f.label :street1, :class => 'control-label' %>
     <div class="controls">
-      <%#= @location.street1 :street1, :class => 'text_field' %>
+    <%= f.text_field (:location, :street1, :class => 'text_field') %>
     </div>
-  </div> -->
+  </div>
+
+<% end %>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
