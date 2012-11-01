@@ -10,4 +10,9 @@ class Location < ActiveRecord::Base
     "#{street1}, #{street2}, #{city}, #{state}, #{zip}"
   end
 
+  def location_str_to_object(fb_location_as_a_string)
+    self.city, self.state = fb_location_as_a_string.split(", ")
+    self
+  end
+
 end

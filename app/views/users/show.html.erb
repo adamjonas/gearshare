@@ -22,15 +22,27 @@
     <dd><%= @user.first_name %></dd>
     <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
     <dd><%= @user.last_name %></dd>
-    <% if @location %>
+    <% if @location.street1 %>
     <dt><strong><%= model_class.human_attribute_name(:street1) %>:</strong></dt>
     <dd><%= @location.street1 %></dd>
+    <% end %>
+
+    <% if @location.street2 %>
     <dt><strong><%= model_class.human_attribute_name(:street2) %>:</strong></dt>
     <dd><%= @location.street2 %></dd>
+    <% end %>
+
+    <% if @location.city %>
     <dt><strong><%= model_class.human_attribute_name(:city) %>:</strong></dt>
     <dd><%= @location.city %></dd>
+    <% end %>
+
+    <% if @location.state %>
     <dt><strong><%= model_class.human_attribute_name(:state) %>:</strong></dt>
     <dd><%= @location.state %></dd>
+    <% end %>
+
+    <% if @location.zip %>
     <dt><strong><%= model_class.human_attribute_name(:zip) %>:</strong></dt>
     <dd><%= @location.zip %></dd>
     <% end %>

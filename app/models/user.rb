@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid
+  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid, :location
 
   has_many :shared_items, :class_name => "Item", :foreign_key => "owner_id"
 
@@ -30,14 +30,14 @@ class User < ActiveRecord::Base
   #   where(auth.slice("provider", "uid")).first || create_from_omniauth(auth)
   # end
 
-  def self.create_from_omniauth(auth)
-    create! do |user|
-      user.provider = auth[:provider]
-      user.uid = auth[:uid]
-     # user.name = auth[:info][:name]
-      user.first_name = auth[:info][:first_name]
-    end
-  end
+  # def self.create_from_omniauth(auth)
+  #   create! do |user|
+  #     user.provider = auth[:provider]
+  #     user.uid = auth[:uid]
+  #    # user.name = auth[:info][:name]
+  #     user.first_name = auth[:info][:first_name]
+  #   end
+  # end
 
 
   def request_to_borrow_item
@@ -53,9 +53,27 @@ class User < ActiveRecord::Base
     user.provider = auth["provider"]
     user.uid = auth["uid"]
     user.first_name = auth["info"]["first_name"]
+    user.last_name = auth["info"]["last_name"]
+    user.email = auth["info"]["email"]
+   
+    #location is passed in as a string. need to send user.location an object.
+    fblocationstr = auth["extra"]["raw_info"]["location"]["name"]
+    location = Location.new
+    user.location = location.location_str_to_object(fblocationstr)
+
+    # fblocation = Location.new unless auth["extra"]["raw_info"]["location"]["name"].nil?
+    # raise user.location.inspect
+    # fblocation.city = = fblocation.to_a.split(,).first
+    # fblocaton.state = fblocation.split(,).last
+    # user.location = fbrellocation
+
+    #user.token = auth["credentials"]["token"]
+    user.save
   end
+
 end
 
+  
   # def self.from_omniauth(auth)
   #   user = where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
   #     user.provider = auth["provider"]
