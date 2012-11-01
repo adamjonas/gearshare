@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid, :location
+  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid, :location_attributes
 
   has_many :shared_items, :class_name => "Item", :foreign_key => "owner_id"
 

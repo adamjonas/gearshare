@@ -1,9 +1,15 @@
+<%- model_class = User -%>
+<!-- <div class="page-header">
+  <h1><#%=t '.title', :default => model_class.model_name.human %></h1>
+</div> -->
+
+<div class="span9">
+
+<div class="row">
+  <aside class="span4">
+
 <%= form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="control-group">
-    <%= f.label :email, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :email, :class => 'text_field' %>
-    </div>
+  
   </div>
   <div class="control-group">
     <%= f.label :first_name, :class => 'control-label' %>
@@ -18,19 +24,34 @@
     </div>
   </div>
 
-<% if @location.street1 %>
-  <!-- fields_for  -->
+<div>
+  <%= f.fields_for :location do |location_fields| %>
+    Street1 : <%= location_fields.text_field :street1 %>
+    Street2 : <%= location_fields.text_field :street2 %>
+    City : <%= location_fields.text_field :city %>
+    state: <%= location_fields.text_field :state %>
+    Zip code: <%= location_fields.text_field :zip %>
+  <% end %>
+<div>
 
-  <div class="control-group">
-    <%= f.label :street1, :class => 'control-label' %>
-    <div class="controls">
-    <%= f.text_field (:location, :street1, :class => 'text_field') %>
-    </div>
-  </div>
-
-<% end %>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
   </div>
 <% end %>
+
+<% if @location %>
+  <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@user.location.latitude}%2C#{@user.location.longitude}" %>
+
+<h3>Nearby locations</h3>
+<ul>
+<% for location in @user.location.nearbys(10) %>
+  <li><%= link_to location.address, location %> (<%= location.distance.to_f.round(2).to_s %> miles)</li>
+<% end %>
+</ul>
+<% end %>
+</div>
+</div>
+</aside>
+</div>
+</div>
