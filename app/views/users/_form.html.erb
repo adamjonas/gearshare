@@ -19,12 +19,15 @@
   </div>
 
 <% if @location.street1 %>
+  <!-- fields_for  -->
+
   <div class="control-group">
     <%= f.label :street1, :class => 'control-label' %>
     <div class="controls">
     <%= f.text_field (:location, :street1, :class => 'text_field') %>
     </div>
   </div>
+
 <% end %>
 
   <div class="form-actions">
