@@ -9,12 +9,13 @@ class User < ActiveRecord::Base
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
-  attr_accessor :name, :image, :gender, :location, :token
  # has_secure_password
 
   #validates_uniqueness_of :email
  # validates_presence_of :first_name, :last_name, :email, :on => :create
 
+  has_one :location
+  accepts_nested_attributes_for :location
 
   def self.authenticate(email, password)
     user = find_by_email(email)
