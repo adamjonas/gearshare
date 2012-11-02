@@ -9,7 +9,8 @@
   <aside class="span4">
     <section>
       <h1>
-        <%= gravatar_for @user %>
+        <%# raise @user.last_name.inspect %>
+        <img src="<%= @user.image %>" alt="<%= @user.last_name %>">
         <%= @user.first_name %>
       </h1>
     </section>
@@ -20,14 +21,10 @@
     <dd><%= @user.first_name %></dd>
     <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
     <dd><%= @user.last_name %></dd>
+    
     <% if @location.street1 %>
     <dt><strong><%= model_class.human_attribute_name(:street1) %>:</strong></dt>
     <dd><%= @location.street1 %></dd>
-    <% end %>
-
-    <% if @location.street2 %>
-    <dt><strong><%= model_class.human_attribute_name(:street2) %>:</strong></dt>
-    <dd><%= @location.street2 %></dd>
     <% end %>
 
     <% if @location.city %>

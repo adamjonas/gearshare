@@ -1,3 +1,9 @@
+<%- model_class = Location -%>
+<div class="span9">
+
+<div class="row">
+  <aside class="span4">
+    <section>
 <%= form_for(@location) do |f| %>
   <% if @location.errors.any? %>
     <div id="error_explanation">
@@ -15,10 +21,7 @@
     <%= f.label :street1 %><br />
     <%= f.text_field :street1 %>
   </div>
-  <div class="field">
-    <%= f.label :street2 %><br />
-    <%= f.text_field :street2 %>
-  </div>
+  
   <div class="field">
     <%= f.label :city %><br />
     <%= f.text_field :city %>
@@ -43,3 +46,7 @@
     <%= f.submit %>
   </div>
 <% end %>
+</section>
+</aside>
+</div>
+</div>
