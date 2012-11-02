@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid, :location_attributes
+  attr_accessible :email, :first_name, :last_name, :password, :shared_items, :provider, :uid, :location_attributes, :image, :token
 
   has_many :shared_items, :class_name => "Item", :foreign_key => "owner_id"
 
@@ -26,19 +26,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # def self.from_omniauth(auth)
-  #   where(auth.slice("provider", "uid")).first || create_from_omniauth(auth)
-  # end
-
-  # def self.create_from_omniauth(auth)
-  #   create! do |user|
-  #     user.provider = auth[:provider]
-  #     user.uid = auth[:uid]
-  #    # user.name = auth[:info][:name]
-  #     user.first_name = auth[:info][:first_name]
-  #   end
-  # end
-
 
   def request_to_borrow_item
     self.shared_items.build(:item_id => params[:id], :status => :open)
@@ -50,12 +37,15 @@ class User < ActiveRecord::Base
   
   def self.create_with_omniauth(auth)
   create! do |user|
+     #raise auth.inspect
     user.provider = auth["provider"]
     user.uid = auth["uid"]
     user.first_name = auth["info"]["first_name"]
     user.last_name = auth["info"]["last_name"]
     user.email = auth["info"]["email"]
-   
+    user.image = auth["info"]["image"]
+    user.token = auth["credentials"]["token"]
+
     #location is passed in as a string. need to send user.location an object.
     fblocationstr = auth["extra"]["raw_info"]["location"]["name"]
     location = Location.new

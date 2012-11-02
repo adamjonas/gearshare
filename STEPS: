@@ -5,7 +5,7 @@ ask FB for permission to access the user's:
 -profile pic and display
 -name
 
-@graph = Koala::Facebook::API.new('AAACEdEose0cBAFXgaRNoHyxF8nNZBj3AfQUUwIAWvbZCv88KVpn8H4ZCKLjvwNuGqhecLwqewMbJPEZAEB1az10qJewcrxgKmTVIFg4ekgZDZD')
+@graph = Koala::Facebook::API.new('AAACEdEose0cBAE2NZCyk2r2qtnyZBn999etiO593vq7sCImCZBS6TyGRIjhoccvPSlkwn5Kh0hOLqunvw0qrS39uCNlg4fNPnu9JYVn2QZDZD')
 
 friends = @graph.get_connections("me", "friends")
 

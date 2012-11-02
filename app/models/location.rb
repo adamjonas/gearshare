@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-  attr_accessible :street1, :street2, :city, :state, :zip, :latitude, :longitude
+  attr_accessible :street1, :city, :state, :zip, :latitude, :longitude
   geocoded_by :address
   after_validation :geocode
 
@@ -7,7 +7,7 @@ class Location < ActiveRecord::Base
   
 
   def address
-    "#{street1}, #{street2}, #{city}, #{state}, #{zip}"
+    "#{street1}, #{city}, #{state}, #{zip}"
   end
 
   def location_str_to_object(fb_location_as_a_string)
